@@ -5,6 +5,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
      $name     = $_POST['name'];
      $password = $_POST['password'];
      $email    = $_POST['email'];
+     $address  = $_POST['address'];
      $url      = $_POST['url'];
  
     # Validate ...... 
@@ -13,25 +14,31 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
  
     # validate name .... 
     if(empty($name)){
-        $errors['name'] = "Field Required"; 
+        $errors['Name'] = "Field Required"; 
     }
  
     # validate email 
     if(empty($email)){
-        $errors['email'] = "Field Required";
+        $errors['Email'] = "Field Required";
     }elseif(!filter_var($email,FILTER_VALIDATE_EMAIL)){
        $errors['Email']   = "Invalid Email";
     }
  
     # validate password 
     if(empty($password)){
-        $errors['password'] = "Field Required";
+        $errors['Password'] = "Field Required";
     }elseif(strlen($password) < 6){
         $errors['Password'] = "Length Must be >= 6 chars";
     }
+    # validate address
+    if(empty($address)){
+        $errors['Address'] = "Field Required";
+    }elseif(strlen($password) < 10) {
+        $errors['Address'] = "Length Must be >= 10 chars";
+    }
     # validate url
     if(empty($url)) {
-        $errors['url'] = "Field Required";
+        $errors['Url'] = "Field Required";
     }elseif(!filter_var($url, FILTER_VALIDATE_URL)) {
         $errors['Url'] = "Invalid URL";
     }
@@ -84,6 +91,10 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
                 <input type="password" class="form-control" id="exampleInputPassword1"   name="password" placeholder="Password">
             </div>
 
+            <div class="form-group">
+                <label for="exampleInputAddress">Address</label>
+                <input type="text" class="form-control" id="exampleInputAddress"   name="address" placeholder="Your address">
+            </div>
 
             <div class="form-group">
                 <label for="exampleInputUrl">Linked URL</label>
