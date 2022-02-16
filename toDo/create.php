@@ -23,9 +23,13 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     
     if (empty($sDate)) {
         $errors['sDate'] = "Specify a start date";
+    }elseif(isValidDateTime($sDate)) {
+        $errors['sDate'] = "Not valid  date";
     }
     if (empty($eDate)) {
         $errors['eDate'] = "Specify an end date";
+    }elseif(isValidDateTime($eDate)) {
+        $errors['eDate'] = "Not valid  date";
     }
     if (empty($_FILES['image']['name'])) {
        
