@@ -1,13 +1,12 @@
-<?php 
+<?php
 session_start();
-
-$server = "localhost";
-$dbName = "toDo"; 
-$dbUser = "root";
+$server     = "localhost";
+$dbName     = "toDo";
+$dbuser     = "root";
 $dbPassword = "";
 
-   $con =  mysqli_connect($server,$dbUser,$dbPassword,$dbName);
-    
-   if(!$con){
-       die ('Error : '. mysqli_connect_error());
-   }
+$con = mysqli_connect($server, $dbuser, $dbPassword, $dbName);
+if (!$con) {
+    die ('Error : '. mysqli_connect_error());
+}
+?>

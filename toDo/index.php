@@ -1,19 +1,20 @@
 <?php
-
 require 'dbconnect.php';
-$sql  = "select * from tasks";
+require 'checklogin.php';
+$user_id = intval($_GET['id']);
+$sql  = "SELECT * FROM tasks WHERE tasks.user_id = $user_id";
+
 $data = mysqli_query($con, $sql);
 ?>
+
 <!DOCTYPE html>
 <html>
-
-<head>
-    <title>Display</title>
+    <head>
+    <title>Display Page</title>
 
     <!-- Latest compiled and minified Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
 
-    <!-- custom css -->
     <style>
         .m-r-1em {
             margin-right: 1em;
@@ -31,100 +32,58 @@ $data = mysqli_query($con, $sql);
             margin-top: 0;
         }
     </style>
-
-</head>
-
-<body>
-
-    <!-- container -->
-    <div class="container">
-
-
-        <div class="page-header">
-            <h1>Display Items</h1>
-            <br>
-
-
-          <?php 
-          
-
-          # Message To User .... 
-
-          echo 'Welcome ,'.$_SESSION['User']['name'].'<br>';
-
-
-
-
-            if(isset($_SESSION['Message'])){
-                echo ' * '.$_SESSION['Message'];
-
-                unset($_SESSION['Message']);
-            }
-          
-
-
-          
-          ?>
-
-
-
+    </head>
+    <body>
+        <div class="container">
+            <div class="page-header">
+                <h1>Display Tasks</h1>
+                <br>
+                <?php
+                echo 'Welcome, ' . $_SESSION['user']['name'] . '<br>';
+                if(isset($_SESSION['Mesage'])) {
+                    echo $_SESSION['Message'];
+                    unset($_SESSION['Message']);
+                }
+                ?>
+            </div>
+            <a href="create.php">Add new Task</a> || <a href="logout.php">LogOut</a>
+            <table class='table table-hover table-responsive table-bordered'>
+                <tr>
+                    <th>ID</th>
+                    <th>Title</th>
+                    <th>Content</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Image</th>
+                    <th>usr_id</th>
+                    <th>Action</th>       
+                </tr>
+                <?php
+                while($result = mysqli_fetch_assoc($data)) {
+                ?>    
+                    <tr>
+                        <td><?php echo $result['id'];?></td>
+                        <td><?php echo $result['title'];?></td>
+                        <td><?php echo $result['content'];?></td>
+                        <td><?php echo $result['sDate'];?></td>
+                        <td><?php echo $result['eDate'];?></td>
+                        <td><?php echo $result['user_id'];?></td>
+                        <td><img src="./uploads/<?php echo $result['image'];?>" alt="" height="50" width="50"></td>
+                        <td>
+                           <a href='delete.php?id=<?php  echo $result['id'];  ?>' class='btn btn-danger m-r-1em'>Delete</a>
+                       </td>
+                    </tr>
+                <?php } ?>
+                
+            </table>
         </div>
+            <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 
-        <a href="create.php">Back</a> 
-
-        <table class='table table-hover table-responsive table-bordered'>
-            <!-- creating our table heading -->
-            <tr>
-                <th>ID</th>
-                <th>Title</th>
-                <th>Content</th>
-                <th>Start Date</th>
-                <th>Eend Date</th>
-                <th>Image</th>
-                <th>Delete</th>
-            </tr>
-
-   <?php 
-        while($result = mysqli_fetch_assoc($data)){
-
-
-   ?>
-            <tr>
-                <td><?php  echo $result['id'];  ?></td>
-                <td><?php  echo $result['title'];  ?></td>
-                <td><?php  echo $result['content'];  ?></td>
-                <td><?php  echo $result['sDate'];  ?></td>
-                <td><?php  echo $result['eDate'];  ?></td>
-                <td> <img src="./images/<?php  echo $result['image'];  ?>"   height="50" width="50" > </td>
-
-                <td>
-                    <a href='delete.php?id=<?php  echo $result['id'];  ?>' class='btn btn-danger m-r-1em'>Delete</a>
-                </td>
-            </tr>
-
-<?php  } ?>
-            <!-- end table -->
-        </table>
-
-    </div>
-    <!-- end .container -->
-
-
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-
-    <!-- Latest compiled and minified Bootstrap JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-    <!-- confirm delete record will be here -->
-
-</body>
-
+        <!-- Latest compiled and minified Bootstrap JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    </body>
 </html>
-
-
-<?php 
-  
-  mysqli_close($con);
-
-?>
+<?php
+mysqli_close($con);
+?>`
