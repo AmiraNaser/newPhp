@@ -81,7 +81,7 @@
                 <td><?php  echo $value['id'];  ?></td>
                 <td><?php  echo $value['title'];  ?></td>
                 <td><?php  echo $value['content'];  ?></td>
-                <td><?php  echo $value['image'];  ?></td>
+                <td><img src="./uploads/<?php echo $value['image'];?>" alt="" height="50" width="50"></td>
                 <td>
                     <a href='delete.php?id=<?php  echo $value['id'];  ?>' class='btn btn-danger m-r-1em'>Delete</a>
                     <a href='update.php?id=<?php  echo $value['id'];  ?>' class='btn btn-primary m-r-1em'>Update</a>

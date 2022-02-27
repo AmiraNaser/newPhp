@@ -3,7 +3,7 @@
 
    $blog = new blog;
    $data =  $blog->showData();
-
+   
    if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
      $result = $blog->register($_POST);
@@ -32,7 +32,9 @@
         <h2>Blog</h2>
       
         <form action="update.php?id=<?php echo $id;?>" method="post">
-
+        <?php 
+    foreach ($data as $key => $value) {
+   ?>
             <div class="form-group">
                 <label for="exampleInputTitle">Title</label>
                 <input type="text" class="form-control" id="exampleInputTitle" aria-describedby=""   name="title" placeholder="" value="<?php  echo $value['title'];?>">
@@ -48,7 +50,7 @@
                 <label for="exampleInputImage">Image</label>
                 <input type="file" class="form-control" id="exampleInputImage"   name="image" placeholder="" value="<?php  echo $value['image'];?>">
             </div>
-
+      <?php } ?>
             <button type="submit" class="btn btn-primary">Update</button>
         </form>
     </div>

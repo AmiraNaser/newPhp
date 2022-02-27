@@ -10,7 +10,7 @@ class blog{
 
     private $title;
     private $content;
-    private $image; 
+    private $image;
     private $result = null;
 
     public function register($data){
@@ -32,9 +32,9 @@ class blog{
      }elseif(!$validator->validate($this->content,2)){
         $errors['content'] = "Invalid Content Length";
      }
-     if(!$validator->validate($this->image = $_FILES['image']['name'],1)){
+     if(!$validator->validate($_FILES['image']['name'],1)){
         $errors['image'] = "Field Required";
-     }elseif(!$validator->validate($this->image = $_FILES['image']['name'],3)){
+     }elseif(!$validator->validate($_FILES['image']['name'],3)){
         $errors['image'] = "Invalid Image";
      }
 
@@ -44,9 +44,8 @@ class blog{
         $this->result = $errors;
     }else {
 
-    $image = uploadFile($_FILES);
-
-    if (empty($image) ) {
+    $this->image = $validator->uploadFile($_FILES);
+    if (empty($this->image) ) {
       $this->result = ["Error In Uploading File Try Again"];
     }else{
        $dbObj = new DB;
@@ -121,11 +120,11 @@ class blog{
    
         if(count($errors) > 0 ){
    
-           $this->result = $errors;
+         $this->result = $errors;
        }else {
-       $image = uploadFile($_FILES);
+         $this->image = $validator->uploadFile($_FILES);
    
-       if (empty($image) ) {
+       if (empty($this->image) ) {
           $this->result = ["Error In Uploading File Try Again"];
        }else{
           $dbObj = new DB;
@@ -139,10 +138,11 @@ class blog{
           }else{
            $this->result = ["Error" => "Error Try Again"];
           }
-          return $this->result;
+        
        }
-   
+       return $this->result;
      } 
+
     }
 
 }
