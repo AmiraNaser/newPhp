@@ -1,7 +1,9 @@
 <?php
-require 'dbconnect.php';
-$sql = "select * from blog";
-$data = mysqli_query($conn, $sql);
+   require './blog.php';
+
+   $blog = new blog;
+   $data =  $blog->showData();
+
 ?>
 
 <!DOCTYPE html>
@@ -60,7 +62,7 @@ $data = mysqli_query($conn, $sql);
 
         </div>
 
-        <a href="blog.php">+ Blog Form</a>
+        <a href="index.php">+ Blog Form</a>
 
         <table class='table table-hover table-responsive table-bordered'>
             <!-- creating our table heading -->
@@ -68,25 +70,21 @@ $data = mysqli_query($conn, $sql);
                 <th>ID</th>
                 <th>Title</th>
                 <th>Content</th>
-                <th>Date</th>
                 <th>Image</th>
                 <th>action</th>
             </tr>
 
    <?php 
-        while($result = mysqli_fetch_assoc($data)){
-
-
+    foreach ($data as $key => $value) {
    ?>
             <tr>
-                <td><?php  echo $result['id'];  ?></td>
-                <td><?php  echo $result['title'];  ?></td>
-                <td><?php  echo $result['content'];  ?></td>
-                <td><?php  echo $result['date'];  ?></td>
-                <td><?php  echo $result['image'];  ?></td>
+                <td><?php  echo $value['id'];  ?></td>
+                <td><?php  echo $value['title'];  ?></td>
+                <td><?php  echo $value['content'];  ?></td>
+                <td><?php  echo $value['image'];  ?></td>
                 <td>
-                    <a href='delete.php?id=<?php  echo $result['id'];  ?>' class='btn btn-danger m-r-1em'>Delete</a>
-                    <a href='update.php?id=<?php  echo $result['id'];  ?>' class='btn btn-primary m-r-1em'>Update</a>
+                    <a href='delete.php?id=<?php  echo $value['id'];  ?>' class='btn btn-danger m-r-1em'>Delete</a>
+                    <a href='update.php?id=<?php  echo $value['id'];  ?>' class='btn btn-primary m-r-1em'>Update</a>
                 </td>
             </tr>
 
@@ -109,6 +107,3 @@ $data = mysqli_query($conn, $sql);
 </body>
 
 </html>
-<?php
- mysqli_close($conn);
-?>
